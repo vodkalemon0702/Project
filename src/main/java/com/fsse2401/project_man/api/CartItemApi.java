@@ -1,10 +1,9 @@
 package com.fsse2401.project_man.api;
 
-import com.fsse2401.project_man.data.domainObject.CartItem.response.CartItemResponseData;
-import com.fsse2401.project_man.data.domainObject.CartItem.response.PutCartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.CartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.PutCartItemResponseData;
 import com.fsse2401.project_man.data.dto.cartItem.response.GetAllCartProductByUserIdDto;
 import com.fsse2401.project_man.data.dto.cartItem.response.PutCartItemResponseDto;
-import com.fsse2401.project_man.data.dto.product.response.GetProductByPidResponseDto;
 import com.fsse2401.project_man.service.CartItemService;
 import com.fsse2401.project_man.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +50,12 @@ public class CartItemApi {
         CartItemResponseData cartItemResponseData = cartItemService.updateCartQuantity(JwtUtil.getFirebaseUserData(jwtToken),pid,quantity);
         GetAllCartProductByUserIdDto getAllCartProductByUserIdDto = new GetAllCartProductByUserIdDto(cartItemResponseData);
         return getAllCartProductByUserIdDto;
+    }
+    @DeleteMapping("/{pid}")
+    public PutCartItemResponseDto deleteCartItem(JwtAuthenticationToken jwtToken,
+                                                 @PathVariable Integer pid){
+        PutCartItemResponseData putCartItemResponseData = cartItemService.deleteCartItem(JwtUtil.getFirebaseUserData(jwtToken),pid);
+        PutCartItemResponseDto putCartItemResponseDto = new PutCartItemResponseDto(putCartItemResponseData);
+        return putCartItemResponseDto;
     }
 }

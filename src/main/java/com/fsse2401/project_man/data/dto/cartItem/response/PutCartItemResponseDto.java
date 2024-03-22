@@ -1,6 +1,6 @@
 package com.fsse2401.project_man.data.dto.cartItem.response;
 
-import com.fsse2401.project_man.data.domainObject.CartItem.response.PutCartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.PutCartItemResponseData;
 
 public class PutCartItemResponseDto {
     private String result;

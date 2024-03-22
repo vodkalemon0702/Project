@@ -1,37 +1,40 @@
-package com.fsse2401.project_man.data.domainObject.product.response;
+package com.fsse2401.project_man.data.domainObject.transcationProduct.response;
 
-import com.fsse2401.project_man.data.entity.ProductEntity;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.CartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.product.response.ProductResponseData;
+import com.fsse2401.project_man.data.entity.CartItemEntity;
 import com.fsse2401.project_man.data.entity.TransactionProductEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-public class ProductResponseData {
+public class TransactionProductResponseData {
+    private Integer tpid;
     private Integer pid;
     private String name;
     private String description;
     private String imageUrl;
     private BigDecimal price;
     private Integer stock;
+    private Integer quantity;
 
-    public ProductResponseData(ProductEntity entity) {
-        this.pid = entity.getPid();
-        this.name = entity.getName();
-        this.description = entity.getDescription();
-        this.imageUrl = entity.getImageUrl();
-        this.price = entity.getPrice();
-        this.stock = entity.getStock();
-    }
-    public ProductResponseData(TransactionProductEntity transactionProductEntity){
+    public TransactionProductResponseData(TransactionProductEntity transactionProductEntity) {
+        this.tpid = transactionProductEntity.getTpid();
         this.pid = transactionProductEntity.getPid();
         this.name = transactionProductEntity.getName();
         this.description = transactionProductEntity.getDescription();
         this.imageUrl = transactionProductEntity.getImageUrl();
         this.price = transactionProductEntity.getPrice();
         this.stock = transactionProductEntity.getStock();
+        this.quantity = transactionProductEntity.getQuantity();
+    }
+
+    public Integer getTpid() {
+        return tpid;
+    }
+
+    public void setTpid(Integer tpid) {
+        this.tpid = tpid;
     }
 
     public Integer getPid() {
@@ -80,5 +83,13 @@ public class ProductResponseData {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

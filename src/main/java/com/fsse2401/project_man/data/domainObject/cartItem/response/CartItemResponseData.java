@@ -1,11 +1,8 @@
-package com.fsse2401.project_man.data.domainObject.CartItem.response;
+package com.fsse2401.project_man.data.domainObject.cartItem.response;
 
 import com.fsse2401.project_man.data.entity.CartItemEntity;
-import com.fsse2401.project_man.data.entity.ProductEntity;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CartItemResponseData {
     private Integer pid;

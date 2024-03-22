@@ -1,5 +1,6 @@
 package com.fsse2401.project_man.security;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,15 +19,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/product/{id}","public/product").permitAll()
-
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable());
         http
                 .oauth2ResourceServer(
                         oauth2ResourceServer -> oauth2ResourceServer.jwt(
                                 jwt -> jwt.decoder(JwtDecoders.fromIssuerLocation(issuer))
-                        ));
+                        )
+                );
         return http.build();
     }
 }

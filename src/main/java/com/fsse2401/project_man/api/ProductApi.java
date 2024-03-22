@@ -2,7 +2,7 @@ package com.fsse2401.project_man.api;
 
 import com.fsse2401.project_man.data.domainObject.product.response.ProductResponseData;
 import com.fsse2401.project_man.data.dto.product.response.GetAllProductResponseDto;
-import com.fsse2401.project_man.data.dto.product.response.GetProductByPidResponseDto;
+import com.fsse2401.project_man.data.dto.product.response.ProductResponseDto;
 import com.fsse2401.project_man.service.ProductService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,9 +32,9 @@ public class ProductApi {
         return getAllProductResponseDtoList;
     }
     @GetMapping("/{id}")
-    public GetProductByPidResponseDto getProductByPid(@PathVariable Integer id){
+    public ProductResponseDto getProductByPid(@PathVariable Integer id){
         ProductResponseData getProductByPidResponseData = productService.getProductByPid(id);
-        GetProductByPidResponseDto productDto = new GetProductByPidResponseDto(getProductByPidResponseData);
+        ProductResponseDto productDto = new ProductResponseDto(getProductByPidResponseData);
         return productDto;
     }
 }

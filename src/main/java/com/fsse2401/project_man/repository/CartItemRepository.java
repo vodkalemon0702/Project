@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface CartItemRepository extends CrudRepository<CartItemEntity,Integer> {
     CartItemEntity findByUserEntityUidAndProductEntityPid(Integer uid,Integer pid);
     List<CartItemEntity> findAllByUserEntity(UserEntity userEntity);
+    void deleteAllByUserEntity_FireBaseUid(String firebaseUid);
 }

@@ -1,11 +1,12 @@
 package com.fsse2401.project_man.service.Impl;
 
-import com.fsse2401.project_man.data.domainObject.CartItem.response.CartItemResponseData;
-import com.fsse2401.project_man.data.domainObject.CartItem.response.PutCartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.CartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.PutCartItemResponseData;
 import com.fsse2401.project_man.data.entity.CartItemEntity;
 import com.fsse2401.project_man.data.entity.ProductEntity;
 import com.fsse2401.project_man.data.user.domainObject.FirebaseUserData;
 import com.fsse2401.project_man.data.user.entity.UserEntity;
+import com.fsse2401.project_man.exception.RequestDataInvalidException;
 import com.fsse2401.project_man.exception.RequestDataMissingException;
 import com.fsse2401.project_man.exception.cart.ExcessiveProductQuantityException;
 import com.fsse2401.project_man.exception.cart.QuantityInvalidException;
@@ -141,8 +142,40 @@ public class CartItemServiceImpl implements CartItemService {
             throw e;
         }
     }
+    @Override
+    public PutCartItemResponseData deleteCartItem(FirebaseUserData firebaseUserData, Integer pid){
+        try {
+            UserEntity userEntity = userService.getEntityByFireBaseUserData(firebaseUserData);
+            if (pid < 1 || pid == null){
+                throw new RequestDataInvalidException();
+            }
+            CartItemEntity cartItemEntity = cartItemRepository.findByUserEntityUidAndProductEntityPid(userEntity.getUid(), pid);
+            if (cartItemEntity == null){
+                throw new ProductNotFoundException();
+            }
+            cartItemRepository.delete(cartItemEntity);
+            PutCartItemResponseData putCartItemResponseData = new PutCartItemResponseData();
+            putCartItemResponseData.setResult("SUCCESS");
+            return putCartItemResponseData;
+        }catch (RequestDataMissingException e){
+            logger.info("Delete cart item:Product ID invalid!");
+            throw e;
+        }catch (ProductNotFoundException e){
+            logger.info("Delete cart item:Product not found!");
+            throw e;
+        }
+    }
     public CartItemEntity getCartItemEntityByUidAndPid(Integer uid,Integer pid){
         CartItemEntity cartItemEntity = cartItemRepository.findByUserEntityUidAndProductEntityPid(uid,pid);
         return cartItemEntity;
+    }
+    @Override
+    public List<CartItemEntity> getAllCartItemEntity(UserEntity user){
+        List<CartItemEntity>cartItemEntityList =  cartItemRepository.findAllByUserEntity(user);
+        return cartItemEntityList;
+    }
+    @Override
+    public void emptyUserCart(String firebaseUid){
+        cartItemRepository.deleteAllByUserEntity_FireBaseUid(firebaseUid);
     }
 }

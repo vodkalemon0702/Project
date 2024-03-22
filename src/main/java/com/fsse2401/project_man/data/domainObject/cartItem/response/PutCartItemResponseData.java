@@ -1,4 +1,4 @@
-package com.fsse2401.project_man.data.domainObject.CartItem.response;
+package com.fsse2401.project_man.data.domainObject.cartItem.response;
 
 public class PutCartItemResponseData {
     private String result;

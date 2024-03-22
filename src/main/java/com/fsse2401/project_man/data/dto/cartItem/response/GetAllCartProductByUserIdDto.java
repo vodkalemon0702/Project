@@ -1,7 +1,7 @@
 package com.fsse2401.project_man.data.dto.cartItem.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fsse2401.project_man.data.domainObject.CartItem.response.CartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.CartItemResponseData;
 
 import java.math.BigDecimal;
 

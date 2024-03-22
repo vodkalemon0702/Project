@@ -2,10 +2,12 @@ package com.fsse2401.project_man.data.dto.product.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fsse2401.project_man.data.domainObject.product.response.ProductResponseData;
+import com.fsse2401.project_man.data.domainObject.transcationProduct.response.TransactionProductResponseData;
+import com.fsse2401.project_man.data.dto.transactionProduct.TransactionProductResponseDto;
 
 import java.math.BigDecimal;
 
-public class GetProductByPidResponseDto {
+public class ProductResponseDto {
     private Integer pid;
     private String name;
     private String description;
@@ -14,7 +16,16 @@ public class GetProductByPidResponseDto {
     private BigDecimal price;
     private Integer stock;
 
-    public GetProductByPidResponseDto(ProductResponseData data) {
+    public ProductResponseDto(ProductResponseData data) {
+        this.pid = data.getPid();
+        this.name = data.getName();
+        this.description = data.getDescription();
+        this.imageUrl = data.getImageUrl();
+        this.price = data.getPrice();
+        this.stock = data.getStock();
+    }
+
+    public ProductResponseDto(TransactionProductResponseData data) {
         this.pid = data.getPid();
         this.name = data.getName();
         this.description = data.getDescription();
