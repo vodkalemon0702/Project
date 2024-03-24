@@ -1,12 +1,8 @@
 package com.fsse2401.project_man.data.domainObject.transcationProduct.response;
 
-import com.fsse2401.project_man.data.domainObject.cartItem.response.CartItemResponseData;
-import com.fsse2401.project_man.data.domainObject.product.response.ProductResponseData;
-import com.fsse2401.project_man.data.entity.CartItemEntity;
 import com.fsse2401.project_man.data.entity.TransactionProductEntity;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class TransactionProductResponseData {
     private Integer tpid;

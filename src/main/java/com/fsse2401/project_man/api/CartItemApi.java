@@ -1,9 +1,8 @@
 package com.fsse2401.project_man.api;
 
 import com.fsse2401.project_man.data.domainObject.cartItem.response.CartItemResponseData;
-import com.fsse2401.project_man.data.domainObject.cartItem.response.PutCartItemResponseData;
+import com.fsse2401.project_man.data.domainObject.cartItem.response.CartItemSuccessDto;
 import com.fsse2401.project_man.data.dto.cartItem.response.GetAllCartProductByUserIdDto;
-import com.fsse2401.project_man.data.dto.cartItem.response.PutCartItemResponseDto;
 import com.fsse2401.project_man.service.CartItemService;
 import com.fsse2401.project_man.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +23,11 @@ public class CartItemApi {
     }
 
     @PutMapping("/{pid}/{quantity}")
-    public PutCartItemResponseDto putCartItem(JwtAuthenticationToken jwtToken,
+    public CartItemSuccessDto putCartItem(JwtAuthenticationToken jwtToken,
                                               @PathVariable Integer pid,
                                               @PathVariable Integer quantity) {
-        PutCartItemResponseData putCartItemResponseData = cartItemService.putCartItem(JwtUtil.getFirebaseUserData(jwtToken), pid, quantity);
-        PutCartItemResponseDto putCartItemResponseDto = new PutCartItemResponseDto(putCartItemResponseData);
-        return putCartItemResponseDto;
+        cartItemService.putCartItem(JwtUtil.getFirebaseUserData(jwtToken), pid, quantity);
+        return new CartItemSuccessDto();
     }
 
     @GetMapping
@@ -52,10 +50,9 @@ public class CartItemApi {
         return getAllCartProductByUserIdDto;
     }
     @DeleteMapping("/{pid}")
-    public PutCartItemResponseDto deleteCartItem(JwtAuthenticationToken jwtToken,
+    public CartItemSuccessDto deleteCartItem(JwtAuthenticationToken jwtToken,
                                                  @PathVariable Integer pid){
-        PutCartItemResponseData putCartItemResponseData = cartItemService.deleteCartItem(JwtUtil.getFirebaseUserData(jwtToken),pid);
-        PutCartItemResponseDto putCartItemResponseDto = new PutCartItemResponseDto(putCartItemResponseData);
-        return putCartItemResponseDto;
+        cartItemService.deleteCartItem(JwtUtil.getFirebaseUserData(jwtToken),pid);
+        return new CartItemSuccessDto();
     }
 }

@@ -10,13 +10,15 @@ import java.util.List;
 
 public interface CartItemService {
 
-    PutCartItemResponseData putCartItem(FirebaseUserData firebaseUserData, Integer pid, Integer quantity);
+
+    boolean putCartItem(FirebaseUserData firebaseUserData, Integer pid, Integer quantity);
 
     List<CartItemResponseData> getAllCartProductsByUserId(FirebaseUserData firebaseUserData);
 
     CartItemResponseData updateCartQuantity(FirebaseUserData firebaseUserData, Integer pid, Integer quantity);
 
-    PutCartItemResponseData deleteCartItem(FirebaseUserData firebaseUserData, Integer pid);
+
+    boolean deleteCartItem(FirebaseUserData firebaseUserData, Integer pid);
 
     List<CartItemEntity> getAllCartItemEntity(UserEntity user);
 

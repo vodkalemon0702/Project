@@ -2,7 +2,8 @@ package com.fsse2401.project_man.service.Impl;
 
 import com.fsse2401.project_man.data.domainObject.product.response.ProductResponseData;
 import com.fsse2401.project_man.data.entity.ProductEntity;
-import com.fsse2401.project_man.exception.RequestDataMissingException;
+import com.fsse2401.project_man.exception.InvalidPidException;
+import com.fsse2401.project_man.exception.product.ProductListEmptyException;
 import com.fsse2401.project_man.exception.product.ProductNotFoundException;
 import com.fsse2401.project_man.repository.ProductRepository;
 import com.fsse2401.project_man.service.ProductService;
@@ -13,12 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
-    List<ProductEntity> productEntityList = new ArrayList<>();
     private final ProductRepository productRepository;
 
     @Autowired
@@ -28,33 +27,42 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponseData> getAllProduct() {
-        List<ProductResponseData> getAllProductResponseDataList = new ArrayList<>();
-        for (ProductEntity productEntity : productRepository.findAll()) {
-            ProductResponseData getAllProductResponseData = new ProductResponseData(productEntity);
-            getAllProductResponseDataList.add(getAllProductResponseData);
+        try {
+            List<ProductResponseData> responseDataList = new ArrayList<>();
+            for (ProductEntity productEntity : productRepository.findAll()) {
+                responseDataList.add(new ProductResponseData(productEntity));
+            }
+            if (responseDataList.isEmpty()) {
+                throw new ProductListEmptyException();
+            }
+            return responseDataList;
+        } catch (ProductListEmptyException ex) {
+            logger.warn("Get all product：" + ex.getMessage());
+            throw ex;
         }
-        if (getAllProductResponseDataList.isEmpty()) {
-            throw new ProductNotFoundException();
-        }
-        return getAllProductResponseDataList;
     }
 
     @Override
     public ProductResponseData getProductByPid(Integer pid) {
-        if (pid == null) {
-            throw new RequestDataMissingException();
+        try {
+            if (pid < 1){
+                throw new InvalidPidException(pid);
+            }
+            ProductEntity productEntity = getProductById(pid);
+            return new ProductResponseData(productEntity);
+        }catch (InvalidPidException | ProductNotFoundException ex){
+            logger.warn("Get product by pid: " + ex.getMessage());
+            throw ex;
         }
-        ProductEntity productEntity = getProductById(pid);
-        ProductResponseData productResponseData = new ProductResponseData(productEntity);
-        return productResponseData;
     }
 
     @Override
     public ProductEntity getProductById(Integer pid) {
-        Optional<ProductEntity> productEntity = productRepository.findByPid(pid);
-        return productEntity.orElseThrow(ProductNotFoundException::new);
+        return productRepository.findByPid(pid).orElseThrow(
+                () -> new ProductNotFoundException(pid));
     }
 
+    @Override
     public boolean isValidQuantity(ProductEntity entity, Integer quantity) {
         if (quantity < 1) {
             return false;

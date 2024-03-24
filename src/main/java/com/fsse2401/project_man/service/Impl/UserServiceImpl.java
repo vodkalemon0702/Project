@@ -2,7 +2,6 @@ package com.fsse2401.project_man.service.Impl;
 
 import com.fsse2401.project_man.data.user.domainObject.FirebaseUserData;
 import com.fsse2401.project_man.data.user.entity.UserEntity;
-import com.fsse2401.project_man.exception.RequestDataMissingException;
 import com.fsse2401.project_man.repository.UserRepository;
 import com.fsse2401.project_man.service.UserService;
 import org.slf4j.Logger;
@@ -29,20 +28,9 @@ public class UserServiceImpl implements UserService {
 //        }else {
 //            return userEntityOptional.get();
 //        }
-        try {
-            if (firebaseUserData.getFirebaseUid().isEmpty()
-            ||firebaseUserData.getEmail().isEmpty()
-            ||firebaseUserData.getFirebaseUid() == null
-            ||firebaseUserData.getEmail() == null){
-                throw new RequestDataMissingException();
-            }
-            return userRepository.findByFireBaseUid(
-                    firebaseUserData.getFirebaseUid()).orElseGet(
-                    () -> userRepository.save(new UserEntity(firebaseUserData))
-            );
-        }catch (RequestDataMissingException e){
-            logger.info("Firebase user:Request data missing!");
-            throw e;
-        }
+        return userRepository.findByFireBaseUid(
+                firebaseUserData.getFirebaseUid()).orElseGet(
+                () -> userRepository.save(new UserEntity(firebaseUserData))
+        );
     }
 }

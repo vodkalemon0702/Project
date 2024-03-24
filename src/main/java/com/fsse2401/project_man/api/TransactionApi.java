@@ -1,7 +1,6 @@
 package com.fsse2401.project_man.api;
 
 import com.fsse2401.project_man.data.domainObject.transaction.response.TransactionResponseData;
-import com.fsse2401.project_man.data.domainObject.transaction.response.TransactionSuccessResponseData;
 import com.fsse2401.project_man.data.dto.transaction.response.TransactionResponseDto;
 import com.fsse2401.project_man.data.dto.transaction.response.TransactionSuccessResponseDto;
 import com.fsse2401.project_man.service.TransactionService;

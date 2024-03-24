@@ -1,11 +1,6 @@
 package com.fsse2401.project_man.data.domainObject.product.response;
 
 import com.fsse2401.project_man.data.entity.ProductEntity;
-import com.fsse2401.project_man.data.entity.TransactionProductEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 import java.math.BigDecimal;
 
@@ -24,14 +19,6 @@ public class ProductResponseData {
         this.imageUrl = entity.getImageUrl();
         this.price = entity.getPrice();
         this.stock = entity.getStock();
-    }
-    public ProductResponseData(TransactionProductEntity transactionProductEntity){
-        this.pid = transactionProductEntity.getPid();
-        this.name = transactionProductEntity.getName();
-        this.description = transactionProductEntity.getDescription();
-        this.imageUrl = transactionProductEntity.getImageUrl();
-        this.price = transactionProductEntity.getPrice();
-        this.stock = transactionProductEntity.getStock();
     }
 
     public Integer getPid() {

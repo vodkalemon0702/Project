@@ -22,19 +22,17 @@ public class ProductApi {
     }
 
     @GetMapping()
-    public List<GetAllProductResponseDto> getAllProduct(){
-        List<ProductResponseData> getAllProductResponseDataList = productService.getAllProduct();
-        List<GetAllProductResponseDto>getAllProductResponseDtoList = new ArrayList<>();
-        for (ProductResponseData productResponseData:getAllProductResponseDataList){
-            GetAllProductResponseDto responseDto = new GetAllProductResponseDto(productResponseData);
-            getAllProductResponseDtoList.add(responseDto);
+    public List<GetAllProductResponseDto> getAllProduct() {
+        List<GetAllProductResponseDto> getAllProductResponseDtoList = new ArrayList<>();
+        for (ProductResponseData productResponseData : productService.getAllProduct()) {
+            getAllProductResponseDtoList.add(new GetAllProductResponseDto(productResponseData));
         }
         return getAllProductResponseDtoList;
     }
+
     @GetMapping("/{id}")
-    public ProductResponseDto getProductByPid(@PathVariable Integer id){
+    public ProductResponseDto getProductByPid(@PathVariable Integer id) {
         ProductResponseData getProductByPidResponseData = productService.getProductByPid(id);
-        ProductResponseDto productDto = new ProductResponseDto(getProductByPidResponseData);
-        return productDto;
+        return new ProductResponseDto(getProductByPidResponseData);
     }
 }

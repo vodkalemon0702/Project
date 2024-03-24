@@ -19,7 +19,7 @@ public class GetAllProductResponseDto {
         this.name = data.getName();
         this.imageUrl = data.getImageUrl();
         this.price = data.getPrice();
-        this.hasStock = data.getStock()>0;
+        this.hasStock = data.getStock() > 0;
     }
 
     public Integer getPid() {
