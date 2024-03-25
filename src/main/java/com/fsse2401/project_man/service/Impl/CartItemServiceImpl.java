@@ -45,7 +45,7 @@ public class CartItemServiceImpl implements CartItemService {
         try {
             UserEntity userEntity = userService.getEntityByFireBaseUserData(firebaseUserData);
             ProductEntity productEntity = productService.getProductById(pid);
-            if (!productService.isValidQuantity(productEntity,quantity)) {
+            if (!productService.isValidQuantity(productEntity, quantity)) {
                 throw new InvalidQuantityException(quantity);
             }
             if (productEntity.getStock() < 1) {
@@ -53,7 +53,7 @@ public class CartItemServiceImpl implements CartItemService {
             }
             Optional<CartItemEntity> cartItemEntityOptional = getCartItemByUidAndPid(userEntity.getUid(), productEntity.getPid());
             if (cartItemEntityOptional.isPresent()) {
-                if ((cartItemEntityOptional.get().getQuantity() + quantity) > productEntity.getStock()){
+                if ((cartItemEntityOptional.get().getQuantity() + quantity) > productEntity.getStock()) {
                     throw new InvalidQuantityException(quantity);
                 }
                 cartItemEntityOptional.get().setQuantity(cartItemEntityOptional.get().getQuantity() + quantity);
@@ -92,7 +92,7 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public CartItemResponseData updateCartQuantity(FirebaseUserData firebaseUserData, Integer pid, Integer quantity) {
         try {
-            if (!productService.isValidQuantity(pid,quantity)) {
+            if (!productService.isValidQuantity(pid, quantity)) {
                 throw new InvalidQuantityException(quantity);
             }
             UserEntity userEntity = userService.getEntityByFireBaseUserData(firebaseUserData);
@@ -134,7 +134,8 @@ public class CartItemServiceImpl implements CartItemService {
         Optional<CartItemEntity> cartItemEntityOptional = cartItemRepository.findByUserEntity_UidAndProductEntity_Pid(uid, pid);
         return cartItemEntityOptional.orElseThrow(() -> new CartItemNotFoundException(uid));
     }
-    public Optional<CartItemEntity> getCartItemByUidAndPid(Integer uid,Integer pid){
+
+    public Optional<CartItemEntity> getCartItemByUidAndPid(Integer uid, Integer pid) {
         Optional<CartItemEntity> cartItemEntityOptional = cartItemRepository.findByUserEntity_UidAndProductEntity_Pid(uid, pid);
         return cartItemEntityOptional;
     }
